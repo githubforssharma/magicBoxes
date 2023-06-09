@@ -1,3 +1,4 @@
+
 import java.util.Scanner;
 
 public class magicBox {
@@ -39,26 +40,50 @@ public class magicBox {
             System.out.println();  // Add an empty line after each box
         }
         System.out.println("Now tell me how many boxes out of the above you see your number in...");
-        int numberOfBoxes = scanner.nextInt();
-        System.out.println("Perfect! You see your number in " +numberOfBoxes+ " boxes above");
-        System.out.println("Now tell me the " +numberOfBoxes+ " boxes you see your number in:");
-        int[] readNumbers = new int[numberOfBoxes];
-        int sum = 0;
-        for (int i=0;i<numberOfBoxes;i++){
-            readNumbers[i]=scanner.nextInt();
-            if(readNumbers[i] < 1 || readNumbers[i] > 6 ){
-                System.out.println("Invalid box number/s. Box number can only be between 1 and 6 (both inclusive)");
-                System.exit(0); //exit the program
+        if(scanner.hasNextInt()){
+            String inputNumber = scanner.nextLine().trim();
+            String[] number = inputNumber.split("\\s+");
+            if (number.length!= 1){
+                System.out.println("Invalid input. Please enter only one number.");
             }
             else {
-            int base=2;
-            int exponent=readNumbers[i];
-            double result = Math.pow(base, exponent-1);
-            int resultInt = (int)result;
-            sum = sum+resultInt;
+                int numberOfBoxes = Integer.parseInt(number[0]);
+                int sum = 0;
+                if(numberOfBoxes < 1 || numberOfBoxes > 6){
+                    System.out.println("Invalid box number/s. Number of boxes should be between 1 and 6, both inclusive");
+                }
+                else {
+                    System.out.println("Perfect! You see your number in " +numberOfBoxes+ " boxes above");
+                    System.out.println("Now tell me the " +numberOfBoxes+ " boxes you see your number in:");
+                    int[] readNumbers = new int[numberOfBoxes];
+                    for (int i=0;i<numberOfBoxes;i++){
+                    if(scanner.hasNextInt()){
+                                readNumbers[i]=scanner.nextInt();
+                                if(readNumbers[i] < 1 || readNumbers[i] > 6 ){
+                                    System.out.println("Invalid box number/s. Box number can only be between 1 and 6 (both inclusive)");
+                                    System.exit(0);//exit the program
+                                }
+                                else {
+                                int base=2;
+                                int exponent=readNumbers[i];
+                                double result = Math.pow(base, exponent-1);
+                                int resultInt = (int)result;
+                                sum = sum+resultInt;
+                                } 
+                            }
+                            else {
+                                System.out.println("Invalid box number/s. Box number can only be between 1 and 6 (both inclusive)");
+                                    System.exit(0);//exit the program
+                            }
+                            }
+                            System.out.println("I am pretty sure your number is: "+sum+ ".");
+                    }
             }
+            }
+        else
+        {
+            System.out.println("You did not enter a valid number. Number of boxes should be between 1 and 6, both inclusive");
         }
-        System.out.println("I am pretty sure your number is: "+sum+ ".");
         scanner.close(); 
     }
 }
